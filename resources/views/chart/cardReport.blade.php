@@ -38,7 +38,7 @@
                     <div class="card-header">
                         <h4>Total Jenis Transaksi</h4>
                     </div>
-                    <div class="card-body">{{ $chart4Data['card2'] }}</div>
+                    <div class="card-body">{{ $chart4Data['card3'] }}</div>
                 </div>
             </div>
         </div>
@@ -60,7 +60,7 @@
                     <div class="card-header">
                         <h4>Total Failed Respon</h4>
                     </div>
-                    <div class="card-body">{{ $chart4Data['card3'] }}</div>
+                    <div class="card-body">{{ $chart4Data['card2'] }}</div>
                 </div>
             </div>
         </div>

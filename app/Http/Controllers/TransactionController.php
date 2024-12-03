@@ -108,7 +108,7 @@ class TransactionController extends Controller
             ->get();
 
         $datass = DB::table('transactions')
-            ->whereNotIn('response_code', ['Sukses'])
+            ->whereNotIn('response_code', ['200'])
             ->get();
 
         $card2 = $datass->pluck('response_code')->count();
@@ -123,9 +123,6 @@ class TransactionController extends Controller
     }
 
 
-    
-
-    // test for realtime
 
     public function store(Request $request)
     {
