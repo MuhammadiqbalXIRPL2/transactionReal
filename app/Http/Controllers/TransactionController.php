@@ -63,5 +63,8 @@ class TransactionController extends Controller
             'labels' => $labels,
             'counts' => $counts,
         ];
+    
     }
+
+    
 }
