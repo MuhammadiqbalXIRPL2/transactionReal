@@ -1,17 +1,12 @@
-
 <div class="card shadow">
     <div id="chart" class="card-body"></div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
 <script>
-    var chartData = @json($chart1Data['datesAndHours']);
-    var datesAndHours =  @json($chart1Data['chartData']);
-
-    var formattedDatesAndHours = datesAndHours.map(function(dateHour) {
-        var date = new Date(dateHour);
-        return date.toLocaleString();
-    });
+    var chartData = @json($chart1Data['chartData']);
+    var datesAndHours = @json($chart1Data['datesAndHours']);
 
     var options = {
         chart: {
@@ -20,7 +15,7 @@
         },
         series: chartData,
         xaxis: {
-            categories: formattedDatesAndHours,
+            categories: datesAndHours,
             title: {
                 text: 'Date and Hour'
             }

@@ -9,8 +9,17 @@
             <div class="main-content">
                 <main class="container">
                     @include('chart.cardReport')
-                    @include('chart.timeChart')
-                    @include('chart.responseChart')
+                    <div class="col-md-12">
+                        @include('chart.timeChart')
+                    </div>
+                    <div class="col-md-12 row">
+                        <div class="col-md-6">
+                            @include('chart.responseChart')
+                        </div>
+                        <div class="col-md-6">
+                            @include('chart.hourChart')
+                        </div>
+                    </div>
                 </main>
             </div>
         </div>

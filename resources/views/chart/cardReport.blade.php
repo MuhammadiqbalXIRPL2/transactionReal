@@ -3,7 +3,7 @@
     <div class="col-lg-4 col-md-4 col-sm-12">
         <div class="card card-statistic-2">
             <div class="card-stats">
-                <div class="card-stats-items">
+                <div class="">
                     <div class="card-stats-item"></div>
                     <div>
                         <div class="card-stats-item"></div>
@@ -16,7 +16,7 @@
                     <div class="card-header">
                         <h4>Total Transaksi</h4>
                     </div>
-                    <div class="card-body"></div>
+                    <div class="card-body">{{ $chart4Data['card'] }}</div>
                 </div>
             </div>
         </div>
@@ -24,7 +24,7 @@
     <div class="col-lg-4 col-md-4 col-sm-12">
         <div class="card card-statistic-2">
             <div class="card-stats">
-                <div class="card-stats-items">
+                <div class="">
                     <div class="card-stats-item"></div>
                     <div class="card-stats-item"></div>
                     <div>
@@ -38,7 +38,7 @@
                     <div class="card-header">
                         <h4>Total Jenis Transaksi</h4>
                     </div>
-                    <div class="card-body"></div>
+                    <div class="card-body">{{ $chart4Data['card2'] }}</div>
                 </div>
             </div>
         </div>
@@ -46,7 +46,7 @@
     <div class="col-lg-4 col-md-4 col-sm-12">
         <div class="card card-statistic-2">
             <div class="card-stats">
-                <div class="card-stats-items">
+                <div class="">
                     <div class="card-stats-item"></div>
                     <div class="card-stats-item"></div>
                     <div>
@@ -60,7 +60,7 @@
                     <div class="card-header">
                         <h4>Total Failed Respon</h4>
                     </div>
-                    <div class="card-body"></div>
+                    <div class="card-body">{{ $chart4Data['card3'] }}</div>
                 </div>
             </div>
         </div>
