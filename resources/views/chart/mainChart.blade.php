@@ -10,7 +10,10 @@
                 <main class="container">
                     @include('chart.cardReport')
                     @include('chart.timeChart')
-                    @include('chart.responseChart')
+                    <div class="d-flex">
+                        @include('chart.responseChart')
+                        @include('chart.hourChart')
+                    </div>
                 </main>
             </div>
         </div>

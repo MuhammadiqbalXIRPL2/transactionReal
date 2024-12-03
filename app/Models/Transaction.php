@@ -15,6 +15,6 @@ class Transaction extends Model
         'url',
         'response_message',
     ];
-    protected $table = 'transactions';
+    protected $table = 'transaksis';
     //
 }
