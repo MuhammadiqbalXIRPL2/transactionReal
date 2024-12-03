@@ -14,7 +14,10 @@ class TransactionController extends Controller
         $chart2Data = $this->response();
         // $chart3Data = $this->hoursChart();
         // dd($chart1Data);
-        return view('chart.mainChart', compact('chart2Data'));
+        // return view('chart.mainChart', compact('chart2Data'));
+        $chart3Data = $this->hoursChart();
+        $chart4Data = $this->cardChart();
+        return view('chart.mainChart', compact('chart2Data', 'chart4Data'));
     }
 
     public function timeChart() {
@@ -96,6 +99,30 @@ class TransactionController extends Controller
             'totals' => $totals
         ]);
     }
+
+    function cardChart() {
+        $card = DB::table('transactions')->count();
+        $datas = DB::table('transactions')            
+            ->select('response_code', DB::raw('count(*) as total'))
+            ->groupBy('response_code')
+            ->get();
+
+        $datass = DB::table('transactions')
+            ->whereNotIn('response_code', ['Sukses'])
+            ->get();
+
+        $card2 = $datass->pluck('response_code')->count();
+
+        $card3 = $datas->pluck('response_code')->count();
+
+        return [
+            'card' => $card,
+            'card2' => $card2,
+            'card3' => $card3,
+        ];
+    }
+
+
     
 
     // test for realtime

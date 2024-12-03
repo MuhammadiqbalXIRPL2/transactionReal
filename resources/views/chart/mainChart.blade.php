@@ -9,10 +9,16 @@
             <div class="main-content">
                 <main class="container">
                     @include('chart.cardReport')
-                    @include('chart.timeChart')
-                    <div class="d-flex justify-content-between container">
-                        @include('chart.responseChart')
-                        @include('chart.hourChart')
+                    <div class="col-md-12">
+                        @include('chart.timeChart')
+                    </div>
+                    <div class="col-md-12 row">
+                        <div class="col-md-6">
+                            @include('chart.responseChart')
+                        </div>
+                        <div class="col-md-6">
+                            @include('chart.hourChart')
+                        </div>
                     </div>
                 </main>
             </div>
