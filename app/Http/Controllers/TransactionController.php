@@ -4,16 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Models\Transaction;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class TransactionController extends Controller
 {
     function index() {
-        $chart1Data = $this->timeChart();
+        // $chart1Data = $this->timeChart();
         $chart2Data = $this->response();
-        $chart3Data = $this->hoursChart();
+        // $chart3Data = $this->hoursChart();
         // dd($chart1Data);
-        return view('chart.mainChart', compact('chart1Data', 'chart2Data', 'chart3Data'));
+        return view('chart.mainChart', compact('chart2Data'));
     }
 
     public function timeChart() {
@@ -31,7 +32,7 @@ class TransactionController extends Controller
             $responseData[$item->date_hour][$item->response_code] = $item->count;
         }
     
-        $datesAndHours = array_keys($responseData); // Label waktu
+        $datesAndHours = array_keys($responseData);
         $responseCodes = Transaction::select('response_code')->distinct()->get();
         $chartData = [];
     
@@ -48,16 +49,21 @@ class TransactionController extends Controller
             ];
         }
     
-        return [
+        // return [
+        //     'datesAndHours' => $datesAndHours,
+        //     'chartData' => $chartData,
+        // ];
+
+        return response()->json([
             'datesAndHours' => $datesAndHours,
             'chartData' => $chartData,
-        ];
+        ]);
     }
     
     
 
     public function response() {
-        $data = DB::table('transaksis')
+        $data = DB::table('transactions')
             ->select('response_code', DB::raw('count(*) as total'))
             ->groupBy('response_code')
             ->get();
@@ -85,12 +91,40 @@ class TransactionController extends Controller
         $totals = $data5->pluck('total_requests');
     
         // dd($hours, $totals);
-        return [
+        return response()->json([
             'hours' => $hours,
             'totals' => $totals
-        ];
+        ]);
     }
     
+
+    // test for realtime
+
+    public function store(Request $request)
+    {
+        try {
+            $validatedData = $request->validate([
+                'type_transaksi' => 'required|string',
+                'response_code' => 'required|string',
+                'url' => 'required|url',
+                'response_message' => 'nullable|string',
+            ]);
+
+            $data = new Transaction([
+                'type_transaksi' => $validatedData['type_transaksi'],
+                'response_code' => $validatedData['response_code'],
+                'url' => $validatedData['url'],
+                'response_message' => $validatedData['response_message'],
+                'timestamp' => Carbon::now(),
+            ]);
+
+            $data->save();
+
+            return response()->json(['message' => 'Insert success'], 201);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Failed to insert data', 'message' => $e->getMessage()], 500);
+        }
+    }
 
 
 }

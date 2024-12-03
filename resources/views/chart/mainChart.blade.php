@@ -10,13 +10,14 @@
                 <main class="container">
                     @include('chart.cardReport')
                     @include('chart.timeChart')
-                    <div class="d-flex">
+                    <div class="d-flex justify-content-between container">
                         @include('chart.responseChart')
                         @include('chart.hourChart')
                     </div>
                 </main>
             </div>
         </div>
+        @include('test.autoInsert')
     </div>
     @include('template.footer')
 </body>
