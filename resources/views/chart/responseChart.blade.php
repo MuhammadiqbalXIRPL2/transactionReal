@@ -6,8 +6,8 @@
 
 
 <script>
-    const labels = @json($labels);
-    const counts = @json($counts);
+    const labels = @json($chart2Data['labels']);
+    const counts = @json($chart2Data['counts']);
 
     const ctx11 = document.getElementById('responseChart').getContext('2d');
     new Chart(ctx11, {

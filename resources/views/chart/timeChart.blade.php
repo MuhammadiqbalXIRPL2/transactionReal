@@ -1,11 +1,12 @@
+
 <div class="card shadow">
     <div id="chart" class="card-body"></div>
 </div>
 
 
 <script>
-    var chartData = @json($chartData);
-    var datesAndHours = @json($datesAndHours);
+    var chartData = @json($chart1Data['datesAndHours']);
+    var datesAndHours =  @json($chart1Data['chartData']);
 
     var formattedDatesAndHours = datesAndHours.map(function(dateHour) {
         var date = new Date(dateHour);

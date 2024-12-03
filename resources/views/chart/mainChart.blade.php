@@ -7,6 +7,8 @@
 
 <main class="container">
     @yield('content')
+    @include('chart.timeChart')
+    @include('chart.responseChart')
 </main>
 
 
