@@ -16,4 +16,5 @@ class Transaction extends Model
         'response_message',
     ];
     protected $table = 'transaksis';
+    //
 }
