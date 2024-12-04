@@ -65,7 +65,7 @@
             });
     }
 
-    setInterval(autoInsertData, 180000);
+    setInterval(autoInsertData, 60000);
 
     autoInsertData();
 </script>

@@ -83,5 +83,5 @@
 
     fetchChartData();
 
-    setInterval(fetchChartData, 10000);
+    setInterval(fetchChartData, 60000);
 </script>

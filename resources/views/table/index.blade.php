@@ -7,8 +7,6 @@
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                    <div class="card-header">
-                    </div>
                     <div class="card-body p-0">
                         <div class="table-responsive    ">
                             <table class="table table-striped" id="sortable-table">
@@ -52,6 +50,10 @@
         <div>
             {{ $table2 -> links() }}
         </div>
+    </section>
+    <section class="">
+        @include('table.realTimeTable')
+        {{-- @include('test.autoInsert') --}}
     </section>
 </div>
 @include('template.footer')
