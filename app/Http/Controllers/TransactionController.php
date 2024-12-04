@@ -4,17 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Models\Transaction;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class TransactionController extends Controller
 {
-    function index()
-    {
-        $chart1Data = $this->timeChart();
+    
+    function index() {
+        // $chart1Data = $this->timeChart();
         $chart2Data = $this->response();
+        // $chart3Data = $this->hoursChart();
+        // dd($chart1Data);
+        // return view('chart.mainChart', compact('chart2Data'));
         $chart3Data = $this->hoursChart();
         $chart4Data = $this->cardChart();
-        return view('chart.mainChart', compact('chart1Data', 'chart2Data', 'chart3Data', 'chart4Data'));
+        return view('chart.mainChart', compact('chart2Data', 'chart4Data'));
     }
 
     public function timeChart()
@@ -34,6 +38,8 @@ class TransactionController extends Controller
         }
 
         $datesAndHours = array_keys($responseData); // Label waktu
+    
+        $datesAndHours = array_keys($responseData);
         $responseCodes = Transaction::select('response_code')->distinct()->get();
         $chartData = [];
 
@@ -49,11 +55,16 @@ class TransactionController extends Controller
                 'data' => $counts,
             ];
         }
+    
+        // return [
+        //     'datesAndHours' => $datesAndHours,
+        //     'chartData' => $chartData,
+        // ];
 
-        return [
+        return response()->json([
             'datesAndHours' => $datesAndHours,
             'chartData' => $chartData,
-        ];
+        ]);
     }
 
 
@@ -88,10 +99,10 @@ class TransactionController extends Controller
         $totals = $data5->pluck('total_requests');
 
         // dd($hours, $totals);
-        return [
+        return response()->json([
             'hours' => $hours,
             'totals' => $totals
-        ];
+        ]);
     }
 
     function cardChart()
@@ -118,7 +129,7 @@ class TransactionController extends Controller
             ->get();
 
         $datass = DB::table('transactions')
-            ->whereNotIn('response_code', ['Sukses'])
+            ->whereNotIn('response_code', ['200'])
             ->get();
 
         $datass1 = DB::table('transactions')
@@ -214,4 +225,34 @@ class TransactionController extends Controller
             'infoFailed7' => $infoFailed7,
         ];
     }
+
+
+
+    public function store(Request $request)
+    {
+        try {
+            $validatedData = $request->validate([
+                'type_transaksi' => 'required|string',
+                'response_code' => 'required|string',
+                'url' => 'required|url',
+                'response_message' => 'nullable|string',
+            ]);
+
+            $data = new Transaction([
+                'type_transaksi' => $validatedData['type_transaksi'],
+                'response_code' => $validatedData['response_code'],
+                'url' => $validatedData['url'],
+                'response_message' => $validatedData['response_message'],
+                'timestamp' => Carbon::now(),
+            ]);
+
+            $data->save();
+
+            return response()->json(['message' => 'Insert success'], 201);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Failed to insert data', 'message' => $e->getMessage()], 500);
+        }
+    }
+
+
 }

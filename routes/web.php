@@ -15,7 +15,10 @@ Route::get('/tran', function () {
 
 Route::get('/transaction', [TransactionController::class, 'index']);
 
+Route::get('/timeChart', [TransactionController::class, 'timeChart']);
+Route::get('/requestHours', [TransactionController::class, 'hoursChart']);
 
+Route::post('/transaksi', [TransactionController::class, 'store']);
 Route::get('/login',[LoginController::class,'login'])->name('login');
 Route::post('/loginPros',[loginController::class,'loginPros'])->name('loginPros');
 

@@ -1,4 +1,4 @@
-<div class="card shadow">
+<div class="card shadow w-full">
     <div class="card-body">
         <canvas id="responseChart" style="width: 100%; height: auto;"></canvas>
     </div>

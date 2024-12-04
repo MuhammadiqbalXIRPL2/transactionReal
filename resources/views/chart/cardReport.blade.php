@@ -115,6 +115,7 @@
                         <h4>Total Failed Respon</h4>
                     </div>
                     <div class="card-body">{{ $chart4Data['card2'] }}</div>
+                    <div class="card-body">{{ $chart4Data['card2'] }}</div>
                 </div>
             </div>
         </div>

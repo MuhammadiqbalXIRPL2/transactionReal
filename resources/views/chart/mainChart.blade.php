@@ -23,6 +23,7 @@
                 </main>
             </div>
         </div>
+        @include('test.autoInsert')
     </div>
     @include('template.footer')
 </body>
