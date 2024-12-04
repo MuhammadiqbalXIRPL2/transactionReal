@@ -25,3 +25,7 @@ Route::post('/loginPros',[loginController::class,'loginPros'])->name('loginPros'
 Route::get('/table', [TableController::class, 'index']);
 Route::get('/timeTable', [TableController::class, 'realTimeTable']);
 
+
+
+Route::get('/components', [TransactionController::class, 'components']);
+

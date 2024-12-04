@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 
 class TransactionController extends Controller
 {
-    
-    function index() {
+
+    function index()
+    {
         // $chart1Data = $this->timeChart();
         $chart2Data = $this->response();
         // $chart3Data = $this->hoursChart();
@@ -37,8 +39,6 @@ class TransactionController extends Controller
             $responseData[$item->date_hour][$item->response_code] = $item->count;
         }
 
-        $datesAndHours = array_keys($responseData); // Label waktu
-    
         $datesAndHours = array_keys($responseData);
         $responseCodes = Transaction::select('response_code')->distinct()->get();
         $chartData = [];
@@ -55,7 +55,7 @@ class TransactionController extends Controller
                 'data' => $counts,
             ];
         }
-    
+
         // return [
         //     'datesAndHours' => $datesAndHours,
         //     'chartData' => $chartData,
@@ -112,9 +112,9 @@ class TransactionController extends Controller
         DATE(timestamp) as Tanggal,
         COUNT(*) as TotalTransaksi
     ')
-        ->groupByRaw('DATE(timestamp)')
-        ->orderBy('Tanggal', 'asc')
-        ->get();
+            ->groupByRaw('DATE(timestamp)')
+            ->orderBy('Tanggal', 'asc')
+            ->get();
 
 
         $card = DB::table('transactions')->count();
@@ -227,6 +227,50 @@ class TransactionController extends Controller
     }
 
 
+    public function components()
+    {
+        $time = DB::table('transactions')
+            ->select(DB::raw('DATE_FORMAT(timestamp, "%d %b") as date'), DB::raw('COUNT(id) as transaction_count'))
+            ->groupBy(DB::raw('DATE_FORMAT(timestamp, "%d %b")'))
+            ->orderByRaw('MAX(timestamp) DESC')
+            ->take(7)
+            ->get();
+
+        $weekly = Transaction::where('timestamp', '>=', Carbon::now()->subWeek())
+            ->count();
+
+        $transactionData = DB::table('transactions')
+            ->select('type_transaksi', DB::raw('COUNT(*) as total'))
+            ->groupBy('type_transaksi')
+            ->get();
+
+        $transactionAmount = DB::table('transactions')
+            ->select('type_transaksi')
+            ->distinct()
+            ->count('type_transaksi');
+
+        $except = ['200', '404'];
+        $failed = DB::table('transactions')
+            ->select('response_code', DB::raw('COUNT(*) as total'))
+            ->whereNotIn('response_code', $except)
+            ->groupBy('response_code')
+            ->get();
+
+        $totalFailed = $failed->sum('total');
+
+        // dd($time, $transaction, $transactionAmount, $failed, $transactionData);
+
+        return response()->json([
+            'time' => $time,
+            'weekly' => $weekly,
+            'transactionAmount' => $transactionAmount,
+            'failed' => $failed,
+            'transactionData' => $transactionData,
+            'totalFailed' => $totalFailed
+        ]);
+    }
+
+
 
     public function store(Request $request)
     {
@@ -253,6 +297,4 @@ class TransactionController extends Controller
             return response()->json(['error' => 'Failed to insert data', 'message' => $e->getMessage()], 500);
         }
     }
-
-
 }
