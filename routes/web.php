@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DailyController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\TableController;
 use App\Http\Controllers\TransactionController;
@@ -28,4 +29,6 @@ Route::get('/timeTable', [TableController::class, 'realTimeTable']);
 
 
 Route::get('/components', [TransactionController::class, 'components']);
+Route::get('/daily', [DailyController::class, 'daily']);
+Route::get('/realTimeChart', [DailyController::class, 'realTimeChart']);
 

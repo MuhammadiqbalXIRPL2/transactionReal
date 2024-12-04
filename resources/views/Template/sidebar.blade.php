@@ -19,6 +19,12 @@
                     <span>Table</span>
                 </a>
             </li>
+            <li class="{{ request()->is('daily') ? 'active' : '' }}">
+                <a href="{{ url('/daily') }}" class="nav-link">
+                    <i class="fa-solid fa-table"></i>
+                    <span>daily</span>
+                </a>
+            </li>
         </ul>
     </aside>
 </div>

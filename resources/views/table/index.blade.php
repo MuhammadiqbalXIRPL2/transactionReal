@@ -52,7 +52,7 @@
         </div>
     </section>
     <section class="">
-        @include('table.realTimeTable')
+        {{-- @include('table.realTimeTable') --}}
         {{-- @include('test.autoInsert') --}}
     </section>
 </div>
