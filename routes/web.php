@@ -24,11 +24,11 @@ Route::get('/login',[LoginController::class,'login'])->name('login');
 Route::post('/loginPros',[loginController::class,'loginPros'])->name('loginPros');
 
 Route::get('/table', [TableController::class, 'index']);
-Route::get('/timeTable', [TableController::class, 'realTimeTable']);
 
 
 
 Route::get('/components', [TransactionController::class, 'components']);
 Route::get('/daily', [DailyController::class, 'daily']);
 Route::get('/realTimeChart', [DailyController::class, 'realTimeChart']);
+Route::get('/timeTable', [DailyController::class, 'realTimeTable']);
 

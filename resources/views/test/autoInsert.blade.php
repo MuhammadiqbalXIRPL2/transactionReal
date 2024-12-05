@@ -9,7 +9,7 @@
     }
 
     function getRandomResponseCode() {
-        const codes = ['200', '400', '404', '500', '502'];
+        const codes = ['200','200','200','200','200','200', '400', '404', '500', '502'];
         return codes[getRandomInt(0, codes.length - 1)];
     }
 

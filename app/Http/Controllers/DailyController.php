@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class DailyController extends Controller
 {
@@ -14,31 +15,31 @@ class DailyController extends Controller
     }
 
     public function realTimeTable()
-    {
-        $table = Transaction::whereNotIn('response_code', ['200', '404'])
-            ->orderBy('timestamp', 'desc')
-            ->get();
+{
+    $table = Transaction::whereNotIn('response_code', ['200'])
+        ->orderBy('timestamp', 'desc')
+        ->paginate(5);
 
-        return response()->json([
-            'table' => $table
-        ]);
-    }
+    return response()->json($table);
+}
+
+
 
     public function realTimeChart()
-    {
-        $threeHoursAgo = now()->subHours(3);
+{
+    $data = DB::table('transactions')
+        ->select('response_code', DB::raw('COUNT(*) as total'))
+        ->groupBy('response_code')
+        ->get();
 
-        $transactionCounts = Transaction::where('created_at', '>=', $threeHoursAgo)
-            ->selectRaw('DATE_FORMAT(created_at, "%H:%i") as minute, COUNT(*) as count')
-            ->groupBy('minute')
-            ->get();
+    $response_codes = $data->pluck('response_code');
+    $totals = $data->pluck('total');
 
-        $totalCount = $transactionCounts->sum('count');
+    return response()->json([
+        'labels' => $response_codes,
+        'series' => $totals,
+    ]);
+}
 
-        return response()->json([
-            'data' => $transactionCounts,
-            'count' => $totalCount,
-            'timestamp' => now()->toDateTimeString(),
-        ]);
-    }
+    
 }

@@ -129,7 +129,7 @@ class TransactionController extends Controller
             ->distinct()
             ->count('type_transaksi');
 
-        $except = ['200', '404'];
+        $except = ['200'];
         $failed = DB::table('transactions')
             ->select('response_code', DB::raw('COUNT(*) as total'))
             ->whereNotIn('response_code', $except)
